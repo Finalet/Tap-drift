@@ -1,0 +1,90 @@
+----- 1.0.96 -----
+FIX: Fixed the issue with the Spline Users not updating in edit mode if they are part of a prefab instance in Unity 2018.3 or higher
+FIX: Improved spline evaluation performance and direction computation accuracy
+FIX: Fixed the SplinePrefs colors not loading properly and loading while instad (Go to Preferences->DTK Splines->Use Defaults to get the fix)
+FIX: The spiral primitive generator now properly generates the spiral shape (broken in previous updates)
+FIX: Editing clip range values for channels inside the Spline Mesh editor now works properly
+FIX: Improved the performance of the Object Bender component
+FIX: The Object Bender now properly bends objects along all axes (broken in previous updates)
+
+REMOVED: Removed "Average Result Vectors" from the SplineUser component as it is now obsolete and bad for performance
+
+FEATURE: Added a custom Up and Forward option to the Object Bender component to further help customize the results
+FEATURE: Added a "Build on Enable" option to the SplineUser component which will make sure that the SplineUser updates every time it has been disabled and re-enabled
+FEATURE: The ObjectController component now has the option (on by default) to retain prefab connections when in Editor mode
+
+API: The AddTrigger methods inside the SplineTracer have re-arranged parameters
+API: Starting from 1.0.96 Dreamteck Splines adds a "DREAMTECK_SPLINES" scripting define to the existing defines in the Player settings - useful for checking if Dreamteck splines is installed in the project.
+
+
+----- 1.0.95 -----
+FIX: Reduced garbage when Spline Users sample splines (thanks to community)
+FIX: Reduced garbage inside the Spline.Evaluate method (thanks to community)
+FIX: Fixed the NumberOverflow exception when entering a spline address where the spline is connected backwards
+FIX: Fixed an editor freeze issue when splines are conncted backwards
+FIX: Reduced the garbage caused by the SplineFollower.Move method
+FIX: Fixed the projection method to work properly with spline addresses where splines are connected backwards
+FIX: Spline Followers will not snap to the spline at start anymore if autoFollow is disabled
+
+FEATURE: Added velocity modes for Spline Tracers (under Motion > Velocity Mode) which define how rigidbody velocities are handled when projecting and following along splines. 
+
+----- 1.0.94 -----
+FIX: The Spline Projector's triggers now work properly in Cached mode
+FIX: SplineTracer Triggers no longer get called incorrectly when calling SetPercent and SetDistance
+FIX: Improved the accuracy of direction calculation for end points of Bezier splines
+FIX: The Object Controller no longer needs "Apply Rotation" to be on in order to randomize the position offset
+
+FEATURE: Right-clicking the "Start Position" field of the Spline Follower will allow for entering a start distance instead of a percent
+FEATURE: Offset, Scale and Rotation randomization now also works for Extruded channels in the SplineMesh component
+FEATURE: The Object Spawn tool now retains the prefab links when spawning instances
+
+API: Added an override for the Evaluate methods which takes a point index
+API: Added the "GetPointPercent" method which converts a point index into a percent along the spline
+API: Added the SplineMesh.Channel.offsetHandler callback for custom offset scripting
+API: Added the SplineMesh.Channel.rotationHandler callback for custom rotation scripting
+API: Added the SplineMesh.Channel.scaleHandler for custom scale scripting
+API: The Object Spawn Tool in the editor no longer uses and relies on the Object Controller component and can work separately
+
+----- 1.0.93 -----
+FEATURE: Official 2018.2 support
+
+----- 1.0.92 -----
+FIX: Fixed the PathGenerator cutting down to half lenght when using double sided
+FIX: Meshes without UVs no longer throw an exception in the SplineMesh component
+FIX: Editor colors are now saved in a format, compatible with all regional settings
+
+FEATURE: The Waveform Generator now rotates with the spline computer's transform.
+FEATURE: The Particle Controller now applies spline colors to the particles
+FEATURE: The Flat points operation now also flattens point normals
+FEATURE: The Mirror points operation now also mirrors point normals
+
+----- 1.0.91 -----
+FEATURE: It is now possible to Shift-select spline points
+FEATURE: Added a "loop samples" toggle for all SplineUsers to manually enable sample looping for closed splines
+
+API: Added a CloneMesh method to all MeshGenerators useful when instantiating mesh generators from ones that exist in the scene
+
+FIX: Fixed the ArgumentOutOfRange exception when extruding surfaces (bug introduced in 1.0.9)
+FIX: Fixed the point deselection issue when control is pressed and a point that is already selected is clicked
+FIX: Setting the SplineFollower's speed to 0 no longer triggers all triggers along the spline
+FIX: The color property of the TubeGenerator now properly affects the round caps
+FIX: Newly created mesh generators have the Default-Diffuse material assigned
+FIX: Performing Undo on spline points connected to a Node now properly updates the Node
+
+----- 1.0.9 -----
+FEATURE: Introduced the SplineMesh component. This component aims to replace the now outdated ExtrudeMesh component and provides full control over the mesh generation.
+FEATURE: Added the SmoothFree Bezier point type which allows for different tangent lengths while preserving the smoothness
+FEATURE: The ObjectBender component is out of BETA
+FEATURE: Added a SplineComputerTravel action
+FEATURE: Added a SplineUserTravel action
+FEATURE: Added a SplineTracerSetDistance action
+FEATURE: Added an option to preserve the clip range behavior when using Uniform samples
+
+FIX: The Round cap of the TubeGenerator no longer has black vertex colors
+FIX: The Clip Range of the ObjectBender component now works properly
+FIX: Drag-selecting points in the scene view no longer selects points behind the camera
+FIX: Secondary mesh UVs are now preserved when bending and extruding meshes
+FIX: Removed duplicate method calls for all Mesh generators - performance increased
+FIX: Greatly reduced GC for all mesh generators
+FIX: ParticleController - new particles no longer flicker for a single frame at the origin
+FIX: ParticleController - old particles no longer change positions suddenly when new particles are born
