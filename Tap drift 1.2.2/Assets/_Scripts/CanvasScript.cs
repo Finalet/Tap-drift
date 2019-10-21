@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -35,6 +36,7 @@ public class CanvasScript : MonoBehaviour
     [Header("Tips")]
     public string[] TipsTexts;
     
+    NumberFormatInfo nfi;
 
     float size = 0;
     void Awake()
@@ -65,6 +67,9 @@ public class CanvasScript : MonoBehaviour
         {
             policyButton.gameObject.SetActive(false);
         }
+
+        nfi = new CultureInfo("ru-RU", false).NumberFormat;
+        nfi.NumberDecimalDigits = 0;
     }
 
     void DrawCursor ()
@@ -85,7 +90,7 @@ public class CanvasScript : MonoBehaviour
         //For Ads
         //DrawCursor();
 
-        topScore.text = "TOP SCORE:\n" + Mathf.Round(GameManager.instance.maxScore);
+        topScore.text = "TOP SCORE:\n" + Mathf.Round(GameManager.instance.maxScore).ToString("N", nfi);
 
         //Crystals
         crystalAmountText.text = GameManager.instance.GetComponent<Crystals>().crystalAmount.ToString();
@@ -145,7 +150,7 @@ public class CanvasScript : MonoBehaviour
         scoreText.text = Mathf.Round(GameManager.instance.score).ToString();
         if (GameManager.instance.keepDriftScore != 0 && !GameManager.instance.lost)
         {
-            driftScoreText.text = Mathf.Round(GameManager.instance.keepDriftScore).ToString();
+            driftScoreText.text = Mathf.Round(GameManager.instance.keepDriftScore).ToString("N", nfi);
 
             driftScoreText.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(driftScoreText.GetComponent<RectTransform>().sizeDelta, new Vector2(500, 60), 0.3f);
             driftScoreText.fontSize = Mathf.Lerp(driftScoreText.fontSize, 95, 0.3f);
@@ -311,7 +316,7 @@ public class CanvasScript : MonoBehaviour
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
                 progressBar.fillAmount = GameManager.instance.maxScore / 20000;
-                progressText.text = Mathf.Round(GameManager.instance.maxScore).ToString();
+                progressText.text = Mathf.Round(GameManager.instance.maxScore).ToString("N", nfi);
             }
             else
             {
@@ -332,7 +337,7 @@ public class CanvasScript : MonoBehaviour
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
                 progressBar.fillAmount = GameManager.instance.maxDrift / 5000;
-                progressText.text = Mathf.Round(GameManager.instance.maxDrift).ToString();
+                progressText.text = Mathf.Round(GameManager.instance.maxDrift).ToString("N", nfi);
             }
             else
             {
@@ -353,7 +358,7 @@ public class CanvasScript : MonoBehaviour
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
                 progressBar.fillAmount = GameManager.instance.overallDriftScore / 50000;
-                progressText.text = Mathf.Round(GameManager.instance.overallDriftScore).ToString();
+                progressText.text = Mathf.Round(GameManager.instance.overallDriftScore).ToString("N", nfi);
             }
             else
             {
@@ -374,7 +379,7 @@ public class CanvasScript : MonoBehaviour
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
                 progressBar.fillAmount = (float)GameManager.instance.crashTimes / 30;
-                progressText.text = Mathf.Round(GameManager.instance.crashTimes).ToString();
+                progressText.text = Mathf.Round(GameManager.instance.crashTimes).ToString("N", nfi);
             }
             else
             {
@@ -395,7 +400,7 @@ public class CanvasScript : MonoBehaviour
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
                 progressBar.fillAmount = (float)GameManager.instance.numberOfDays / 5;
-                progressText.text = Mathf.Round(GameManager.instance.numberOfDays).ToString();
+                progressText.text = Mathf.Round(GameManager.instance.numberOfDays).ToString("N", nfi);
             }
             else
             {
