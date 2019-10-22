@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CanvasScript : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText, driftScoreText, tapToPlay, topScore, countDown, carName, tipsText, crystalAmountText, currentLevelText, nextLevelText, rewardText;
+    public TextMeshProUGUI scoreText, driftScoreText, tapToPlay, topScore, countDown, carName, tipsText, crystalAmountText, bulldozerAmountText, currentLevelText, nextLevelText, rewardText;
     public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel;
     public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar;
     public Text discText, progressText, upgradeMultiplierText;
@@ -29,9 +29,12 @@ public class CanvasScript : MonoBehaviour
     public GameObject continueButton;
 
     [Header("Upgrades")]
-    public TextMeshProUGUI multUpgradePriceText;
     public TextMeshProUGUI crystalAmountTextInShop;
+    public TextMeshProUGUI bulldozerAmountTextInShop;
+    public TextMeshProUGUI multUpgradePriceText;
+    public TextMeshProUGUI bulldozerPriceText;
     public Button upgradeMultiplierButton;
+    public Button bulldozerButton;
 
     [Header("Tips")]
     public string[] TipsTexts;
@@ -100,6 +103,10 @@ public class CanvasScript : MonoBehaviour
         if (!GameManager.instance.GetComponent<LevelManager>().dontChangeRewardText)
             rewardText.text = GameManager.instance.GetComponent<LevelManager>().rewardAmount.ToString();
 
+        //Bulldozer
+        bulldozerAmountText.text = GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount.ToString();
+
+
         DrawUpgradesUI();
 
         ScoreText();
@@ -120,21 +127,7 @@ public class CanvasScript : MonoBehaviour
         else
             sound.sprite = soundOff;
 
-        if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= 0 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 9)
-        {
-            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 60);
-        }
-        else if(GameManager.instance.GetComponent<Crystals>().crystalAmount >= 10 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 99)
-        {
-            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 60);
-        } else if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= 100 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 999)
-        {
-            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 60);
-        }
-        else if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= 1000 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 9999)
-        {
-            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 60);
-        }
+        DrawAmounts();
 
 
         //Swipe Left in garag
@@ -468,6 +461,7 @@ public class CanvasScript : MonoBehaviour
         garageButton.gameObject.SetActive(false);
         tipsText.gameObject.SetActive(false);
         crystalAmountText.gameObject.SetActive(false);
+        bulldozerAmountText.gameObject.SetActive(false);
 
         leftButton.gameObject.SetActive(true);
         rightButton.gameObject.SetActive(true);
@@ -491,6 +485,7 @@ public class CanvasScript : MonoBehaviour
             garageButton.gameObject.SetActive(true);
             tipsText.gameObject.SetActive(true);
             crystalAmountText.gameObject.SetActive(true);
+            bulldozerAmountText.gameObject.SetActive(true);
 
             leftButton.gameObject.SetActive(false);
             rightButton.gameObject.SetActive(false);
@@ -510,6 +505,7 @@ public class CanvasScript : MonoBehaviour
             exitUpgradesButton.gameObject.SetActive(false);
 
             crystalAmountText.gameObject.SetActive(true);
+            bulldozerAmountText.gameObject.SetActive(true);
             topScore.gameObject.SetActive(true);
             tapToPlay.gameObject.SetActive(true);
             play.gameObject.SetActive(true);
@@ -738,6 +734,7 @@ public class CanvasScript : MonoBehaviour
     }
 
 
+
  #region Upgrades
 
     public bool inUpgrades;
@@ -750,6 +747,7 @@ public class CanvasScript : MonoBehaviour
         exitUpgradesButton.gameObject.SetActive(true);
 
         crystalAmountText.gameObject.SetActive(false);
+        bulldozerAmountText.gameObject.SetActive(false);
         topScore.gameObject.SetActive(false);
         tapToPlay.gameObject.SetActive(false);
         play.gameObject.SetActive(false);
@@ -757,14 +755,24 @@ public class CanvasScript : MonoBehaviour
         tipsText.gameObject.SetActive(false);
     }
     void DrawUpgradesUI () {
-        upgradeMultiplierText.text = "x" + GameManager.instance.GetComponent<UpgradesContainer>().upgradeMultiplier.ToString();
         crystalAmountTextInShop.text = GameManager.instance.GetComponent<Crystals>().crystalAmount.ToString();
+        bulldozerAmountTextInShop.text = GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount.ToString();
+        //Mulpitplier
+        upgradeMultiplierText.text = "x" + GameManager.instance.GetComponent<UpgradesContainer>().upgradeMultiplier.ToString();
         multUpgradePriceText.text = GameManager.instance.GetComponent<UpgradesContainer>().upgradeMultiplierPrice.ToString();
 
         if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= GameManager.instance.GetComponent<UpgradesContainer>().upgradeMultiplierPrice)
             upgradeMultiplierButton.interactable = true;
         else 
             upgradeMultiplierButton.interactable = false;
+
+        //Bulldozer
+        bulldozerPriceText.text = GameManager.instance.GetComponent<UpgradesContainer>().bulldozerPrice.ToString();
+
+        if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= GameManager.instance.GetComponent<UpgradesContainer>().bulldozerPrice)
+            bulldozerButton.interactable = true;
+        else 
+            bulldozerButton.interactable = false;
     }
 
     public Color bulldozerDeployed, bulldozerDeployed2;
@@ -775,6 +783,40 @@ public class CanvasScript : MonoBehaviour
         } else {
             levelBar.color = baseColor; levelBar.transform.GetChild(1).GetComponent<Image>().color = baseColor2;
         } 
+    }
+ 
+    void DrawAmounts() {
+        if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= 0 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 9)
+        {
+            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 60);
+        }
+        else if(GameManager.instance.GetComponent<Crystals>().crystalAmount >= 10 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 99)
+        {
+            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 60);
+        } else if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= 100 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 999)
+        {
+            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 60);
+        }
+        else if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= 1000 && GameManager.instance.GetComponent<Crystals>().crystalAmount <= 9999)
+        {
+            crystalAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 60);
+        }
+        
+        if (GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount >= 0 && GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount <= 9)
+        {
+            bulldozerAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 60);
+        }
+        else if(GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount >= 10 && GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount <= 99)
+        {
+            bulldozerAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 60);
+        } else if (GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount >= 100 && GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount <= 999)
+        {
+            bulldozerAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 60);
+        }
+        else if (GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount >= 1000 && GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount <= 9999)
+        {
+            bulldozerAmountText.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 60);
+        }
     }
  #endregion
 }

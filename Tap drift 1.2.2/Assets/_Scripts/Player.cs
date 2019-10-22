@@ -383,10 +383,10 @@ public class Player : MonoBehaviour
         Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, clampedFOV, 0.1f);
 
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount > 0)
             DeployBulldozer();
 #else 
-        if (Input.touchCount > 0 && Input.GetTouch(0).deltaPosition.y >= Screen.height / 12 && gameStarted)
+        if (Input.touchCount > 0 && Input.GetTouch(0).deltaPosition.y >= Screen.height / 12 && gameStarted  && GameManager.instance.GetComponent<UpgradesContainer>().bulldozerAmount > 0)
             DeployBulldozer();
 #endif
     }
@@ -444,5 +444,6 @@ public class Player : MonoBehaviour
 
         bulldozerDeployed = true;
         bulldozer.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f); 
+        GameManager.instance.GetComponent<UpgradesContainer>().ConsumeBulldozer();
     }
 }
