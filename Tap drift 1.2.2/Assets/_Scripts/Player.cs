@@ -27,6 +27,10 @@ public class Player : MonoBehaviour
     public float driftFuel;
     public float maxDriftFuel;
 
+    [Header("Bulldozer")]
+    public bool bulldozerDeployed;
+    public GameObject bulldozer;
+
     [Space]
     public GameObject roadGenerator;
     
@@ -160,6 +164,9 @@ public class Player : MonoBehaviour
     void Update()
     {
         explosion.transform.position = carModel.transform.position + 0.6f * Vector3.up;
+
+        BulldozerUpdate();
+
         //Rotate car before start of the game
         if (!gameStarted)
             carModel.transform.Rotate(Vector3.up, 20 * Time.deltaTime);
@@ -374,6 +381,14 @@ public class Player : MonoBehaviour
         float desiredFOV = 60 + (currentSpeed - baseSpeed) * 2f;
         float clampedFOV = Mathf.Clamp(desiredFOV, 60, 110);
         Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, clampedFOV, 0.1f);
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Space))
+            DeployBulldozer();
+#else 
+        if (Input.touchCount > 0 && Input.GetTouch(0).deltaPosition.y >= Screen.height / 12 && gameStarted)
+            DeployBulldozer();
+#endif
     }
 
 
@@ -412,5 +427,22 @@ public class Player : MonoBehaviour
 
         if (GameManager.instance.lost)
             driftTimer = 0;
+    }
+
+    void BulldozerUpdate () {
+        bulldozer.transform.localPosition = carModel.transform.localPosition + new Vector3(0, 0.15f - carModel.transform.localPosition.y, 1.7f);
+        
+        if (bulldozerDeployed) {
+            bulldozer.SetActive(true);
+        } else {
+            bulldozer.SetActive(false);
+        }
+    }
+    public void DeployBulldozer () {
+        if (bulldozerDeployed)
+            return;
+
+        bulldozerDeployed = true;
+        bulldozer.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f); 
     }
 }

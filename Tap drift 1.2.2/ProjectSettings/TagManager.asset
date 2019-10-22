@@ -8,6 +8,7 @@ TagManager:
   - CitizenCar
   - Road
   - Fuel
+  - Bulldozer
   layers:
   - Default
   - TransparentFX

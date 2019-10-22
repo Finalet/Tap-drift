@@ -70,6 +70,9 @@ public class CanvasScript : MonoBehaviour
 
         nfi = new CultureInfo("ru-RU", false).NumberFormat;
         nfi.NumberDecimalDigits = 0;
+
+        baseColor = levelBar.color;
+        baseColor2 = levelBar.transform.GetChild(1).GetComponent<Image>().color;
     }
 
     void DrawCursor ()
@@ -105,6 +108,7 @@ public class CanvasScript : MonoBehaviour
         TapToPlay();
         UpdateCarInfo();
         DiscPanelInfo();
+        ChangeColorOfLVLui();
 
         if (showDriftTip)
             driftTip.SetActive(true);
@@ -763,5 +767,14 @@ public class CanvasScript : MonoBehaviour
             upgradeMultiplierButton.interactable = false;
     }
 
+    public Color bulldozerDeployed, bulldozerDeployed2;
+    Color baseColor, baseColor2;
+    void ChangeColorOfLVLui () {
+        if (GameManager.instance.Player.GetComponent<Player>().bulldozerDeployed) {
+            levelBar.color = bulldozerDeployed; levelBar.transform.GetChild(1).GetComponent<Image>().color = bulldozerDeployed2;
+        } else {
+            levelBar.color = baseColor; levelBar.transform.GetChild(1).GetComponent<Image>().color = baseColor2;
+        } 
+    }
  #endregion
 }

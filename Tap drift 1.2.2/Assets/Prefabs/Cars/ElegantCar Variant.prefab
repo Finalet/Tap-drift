@@ -5546,6 +5546,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElegantCar Variant
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: b676d1ab6de6c374e972b26769d30d02,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b676d1ab6de6c374e972b26769d30d02,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5673,6 +5678,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b676d1ab6de6c374e972b26769d30d02, type: 3}
+--- !u!1 &1503067156634590331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8954058554348596774, guid: b676d1ab6de6c374e972b26769d30d02,
+    type: 3}
+  m_PrefabInstance: {fileID: 1686383324748303777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9048673154992734962 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7706895878941265747, guid: b676d1ab6de6c374e972b26769d30d02,
@@ -5694,12 +5705,6 @@ Transform:
 --- !u!4 &5917035553527326395 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b676d1ab6de6c374e972b26769d30d02,
-    type: 3}
-  m_PrefabInstance: {fileID: 1686383324748303777}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1503067156634590331 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8954058554348596774, guid: b676d1ab6de6c374e972b26769d30d02,
     type: 3}
   m_PrefabInstance: {fileID: 1686383324748303777}
   m_PrefabAsset: {fileID: 0}
