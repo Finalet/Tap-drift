@@ -63,7 +63,7 @@ public class citizenModelTrigger : MonoBehaviour
             }
         }
 
-        rb.AddRelativeForce(new Vector3(x, y, z) * speed * 0.8f);
+        rb.AddRelativeForce(new Vector3(x, y, z) * speed * 0.015f, ForceMode.Impulse);
         rb.AddRelativeTorque(new Vector3(0, 0, torque)); 
 
         GameManager.instance.Player.GetComponent<Player>().bulldozer.GetComponent<Animation>().Play();

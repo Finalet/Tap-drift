@@ -46,7 +46,7 @@ public class UpgradesContainer : MonoBehaviour
         CalculatePrices();
     }
     void CalculatePrices () {
-        upgradeMultiplierPrice = upgradeMultiplier * 40;
-        bulldozerPrice = 50;
+        upgradeMultiplierPrice = upgradeMultiplier * 30;
+        bulldozerPrice = 10;
     }
 }

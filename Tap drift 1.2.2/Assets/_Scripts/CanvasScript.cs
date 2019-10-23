@@ -144,7 +144,7 @@ public class CanvasScript : MonoBehaviour
 
     void ScoreText ()
     {
-        scoreText.text = Mathf.Round(GameManager.instance.score).ToString();
+        scoreText.text = Mathf.Round(GameManager.instance.score).ToString("N", nfi);
         if (GameManager.instance.keepDriftScore != 0 && !GameManager.instance.lost)
         {
             driftScoreText.text = Mathf.Round(GameManager.instance.keepDriftScore).ToString("N", nfi);

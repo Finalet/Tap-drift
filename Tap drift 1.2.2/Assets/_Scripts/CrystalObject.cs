@@ -15,7 +15,6 @@ public class CrystalObject : MonoBehaviour
         {
             Taptic.Medium();
             GameManager.instance.GetComponent<Crystals>().AddCrystal(1);
-
             StartCoroutine(CollectAnim());
         }
     }

@@ -442,6 +442,7 @@ public class Player : MonoBehaviour
         if (bulldozerDeployed)
             return;
 
+        Taptic.Medium();
         bulldozerDeployed = true;
         bulldozer.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f); 
         GameManager.instance.GetComponent<UpgradesContainer>().ConsumeBulldozer();
