@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     [Header("Bulldozer")]
     public bool bulldozerDeployed;
     public GameObject bulldozer;
+    public int timesSmashed;
 
     [Space]
     public GameObject roadGenerator;

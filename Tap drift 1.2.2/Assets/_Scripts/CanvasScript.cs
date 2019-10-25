@@ -10,7 +10,7 @@ public class CanvasScript : MonoBehaviour
     public TextMeshProUGUI scoreText, driftScoreText, tapToPlay, topScore, countDown, carName, tipsText, crystalAmountText, bulldozerAmountText, currentLevelText, nextLevelText, rewardText;
     public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel;
     public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar;
-    public Text discText, progressText, upgradeMultiplierText;
+    public Text discText, progressText, upgradeMultiplierText, bulldozerSmashTimesIconText;
 
     public Sprite locked, pick, soundOn, soundOff;
 
@@ -33,8 +33,10 @@ public class CanvasScript : MonoBehaviour
     public TextMeshProUGUI bulldozerAmountTextInShop;
     public TextMeshProUGUI multUpgradePriceText;
     public TextMeshProUGUI bulldozerPriceText;
+    public TextMeshProUGUI bulldozerSmashTimesPriceText; 
     public Button upgradeMultiplierButton;
     public Button bulldozerButton;
+    public Button bulldozerSmashTimesButton;
 
     [Header("Tips")]
     public string[] TipsTexts;
@@ -768,11 +770,20 @@ public class CanvasScript : MonoBehaviour
 
         //Bulldozer
         bulldozerPriceText.text = GameManager.instance.GetComponent<UpgradesContainer>().bulldozerPrice.ToString();
+        bulldozerSmashTimesIconText.text = GameManager.instance.GetComponent<UpgradesContainer>().bulldozerSmashTimes.ToString();
 
         if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= GameManager.instance.GetComponent<UpgradesContainer>().bulldozerPrice)
             bulldozerButton.interactable = true;
         else 
             bulldozerButton.interactable = false;
+
+        //Bulldozer smashed times
+        bulldozerSmashTimesPriceText.text = GameManager.instance.GetComponent<UpgradesContainer>().bulldozerSmashTimesPrice.ToString();
+
+        if (GameManager.instance.GetComponent<Crystals>().crystalAmount >= GameManager.instance.GetComponent<UpgradesContainer>().bulldozerSmashTimesPrice)
+            bulldozerSmashTimesButton.interactable = true;
+        else 
+            bulldozerSmashTimesButton.interactable = false;
     }
 
     public Color bulldozerDeployed, bulldozerDeployed2;

@@ -43,6 +43,8 @@ public class citizenModelTrigger : MonoBehaviour
     IEnumerator Bulldoze () {
         Taptic.Heavy();
         
+        GameManager.instance.Player.GetComponent<Player>().timesSmashed ++;
+
         Rigidbody rb = GetComponent<Rigidbody>();
         transform.parent.GetComponent<SplineFollower>().enabled = false;
         GetComponent<BoxCollider>().enabled = false;
@@ -67,8 +69,16 @@ public class citizenModelTrigger : MonoBehaviour
         rb.AddRelativeTorque(new Vector3(0, 0, torque)); 
 
         GameManager.instance.Player.GetComponent<Player>().bulldozer.GetComponent<Animation>().Play();
+        if (GameManager.instance.Player.GetComponent<Player>().timesSmashed < GameManager.instance.GetComponent<UpgradesContainer>().bulldozerSmashTimes) {
+            yield return new WaitForSeconds(0.2167f);
+            GameManager.instance.Player.GetComponent<Player>().bulldozer.GetComponent<Animation>().Stop();
+        }
         yield return new WaitForSeconds(0.33f);
-        GameManager.instance.Player.GetComponent<Player>().bulldozerDeployed = false;
+        if (GameManager.instance.Player.GetComponent<Player>().timesSmashed >= GameManager.instance.GetComponent<UpgradesContainer>().bulldozerSmashTimes) {
+            GameManager.instance.Player.GetComponent<Player>().timesSmashed = 0;
+            GameManager.instance.Player.GetComponent<Player>().bulldozerDeployed = false;
+        }
         Destroy(transform.parent.gameObject);
+        
     }
 }

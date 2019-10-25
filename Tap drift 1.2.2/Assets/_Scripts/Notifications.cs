@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class Notifications : MonoBehaviour
 {
+
     void Start()
     {
         RemoveNotifications();
@@ -41,11 +42,40 @@ public class Notifications : MonoBehaviour
             Debug.Log(res);
         }
         yield return new WaitForSeconds(1);
-        Trigger48Notification();
-        Trigger96Notification();
-        Trigger144Notification();
+        TriggerNotification1();
+        TriggerNotification2();
+        TriggerNotification3();
+        TriggerNotification4();
+        TriggerNotification5();
     }
-    void Trigger48Notification()
+    void TriggerNotification1()
+    {
+        var timeTrigger = new iOSNotificationTimeIntervalTrigger()
+        {
+            TimeInterval = new TimeSpan(24, 0, 0),
+
+            Repeats = false
+        };
+
+        var notification = new iOSNotification()
+        {
+            // You can optionally specify a custom identifier which can later be 
+            // used to cancel the notification, if you don't set one, a unique 
+            // string will be generated automatically.
+            Identifier = "24 hour notif",
+            Title = "Login for bonuses",
+            Body = "Open the game to get daily helpful bonuses!",
+            Subtitle = "",
+            ShowInForeground = true,
+            ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
+            CategoryIdentifier = "category_a",
+            ThreadIdentifier = "thread1",
+            Trigger = timeTrigger,
+        };
+
+        iOSNotificationCenter.ScheduleNotification(notification);
+    }
+    void TriggerNotification2()
     {
         var timeTrigger = new iOSNotificationTimeIntervalTrigger()
         {
@@ -60,8 +90,8 @@ public class Notifications : MonoBehaviour
             // used to cancel the notification, if you don't set one, a unique 
             // string will be generated automatically.
             Identifier = "48 hour notif",
-            Title = "Challange!",
-            Body = "We challange you! Try beating your current best score. Check the leaderboard to find friends to compete with.",
+            Title = "New cars!",
+            Body = "Login to unlock new exciting cars!",
             Subtitle = "",
             ShowInForeground = true,
             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
@@ -72,7 +102,34 @@ public class Notifications : MonoBehaviour
 
         iOSNotificationCenter.ScheduleNotification(notification);
     }
-    void Trigger96Notification()
+    void TriggerNotification3()
+    {
+        var timeTrigger = new iOSNotificationTimeIntervalTrigger()
+        {
+            TimeInterval = new TimeSpan(72, 0, 0),
+
+            Repeats = false
+        };
+
+        var notification = new iOSNotification()
+        {
+            // You can optionally specify a custom identifier which can later be 
+            // used to cancel the notification, if you don't set one, a unique 
+            // string will be generated automatically.
+            Identifier = "72 hour notif",
+            Title = "Upgrades",
+            Body = "Login and unlock more advanced upgrades!",
+            Subtitle = "",
+            ShowInForeground = true,
+            ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
+            CategoryIdentifier = "category_a",
+            ThreadIdentifier = "thread1",
+            Trigger = timeTrigger,
+        };
+
+        iOSNotificationCenter.ScheduleNotification(notification);
+    }
+    void TriggerNotification4()
     {
         var timeTrigger = new iOSNotificationTimeIntervalTrigger()
         {
@@ -87,8 +144,8 @@ public class Notifications : MonoBehaviour
             // used to cancel the notification, if you don't set one, a unique 
             // string will be generated automatically.
             Identifier = "96 hour notif",
-            Title = "Drifting misses you!",
-            Body = "You have not drifted in a while. Catch up to your friends on the leaderboard!",
+            Title = "Challange!",
+            Body = "We challange you! Try beating your current best score. Check the leaderboard to find friends to compete with.",
             Subtitle = "",
             ShowInForeground = true,
             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
@@ -99,11 +156,11 @@ public class Notifications : MonoBehaviour
 
         iOSNotificationCenter.ScheduleNotification(notification);
     }
-    void Trigger144Notification()
+    void TriggerNotification5()
     {
         var timeTrigger = new iOSNotificationTimeIntervalTrigger()
         {
-            TimeInterval = new TimeSpan(144, 0, 0),
+            TimeInterval = new TimeSpan(120, 0, 0),
 
             Repeats = false
         };
@@ -113,9 +170,9 @@ public class Notifications : MonoBehaviour
             // You can optionally specify a custom identifier which can later be 
             // used to cancel the notification, if you don't set one, a unique 
             // string will be generated automatically.
-            Identifier = "144 hour notif",
-            Title = "Challange!",
-            Body = "We challange you! Try beating your current best score. Check the leaderboard to find friends to compete with.",
+            Identifier = "120 hour notif",
+            Title = "Drifting misses you",
+            Body = "You have not visited us in a while. Come back to get special bonuses.",
             Subtitle = "",
             ShowInForeground = true,
             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
@@ -177,9 +234,11 @@ public class Notifications : MonoBehaviour
     void RemoveNotifications ()
     {
 #if UNITY_IOS
+        iOSNotificationCenter.RemoveScheduledNotification("24 hour notif");
         iOSNotificationCenter.RemoveScheduledNotification("48 hour notif");
+        iOSNotificationCenter.RemoveScheduledNotification("72 hour notif");
         iOSNotificationCenter.RemoveScheduledNotification("96 hour notif");
-        iOSNotificationCenter.RemoveScheduledNotification("144 hour notif");
+        iOSNotificationCenter.RemoveScheduledNotification("120 hour notif");
 #else
         AndroidNotificationCenter.CancelAllScheduledNotifications();
 #endif

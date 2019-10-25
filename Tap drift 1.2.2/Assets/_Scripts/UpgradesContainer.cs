@@ -12,6 +12,10 @@ public class UpgradesContainer : MonoBehaviour
     public int bulldozerAmount;
     public int bulldozerPrice;
 
+    [Header("Bulldozer SmashTimes")]
+    public int bulldozerSmashTimes;
+    public int bulldozerSmashTimesPrice;
+
 
     void Awake() {
         if (ES3.KeyExists("upgradeMultiplier"))
@@ -23,6 +27,11 @@ public class UpgradesContainer : MonoBehaviour
             bulldozerAmount = ES3.Load<int>("bulldozerAmount");
         else 
             bulldozerAmount = 0;
+
+        if (ES3.KeyExists("bulldozerSmashTimes"))
+            bulldozerSmashTimes = ES3.Load<int>("bulldozerSmashTimes");
+        else 
+            bulldozerSmashTimes = 1;
     }
     public void PurchaseUpgradeMultiplier() {
         Taptic.Selection();
@@ -37,6 +46,13 @@ public class UpgradesContainer : MonoBehaviour
         GetComponent<Crystals>().RemoveCrystal(bulldozerPrice);
         ES3.Save<int>("bulldozerAmount", bulldozerAmount);
     }
+
+    public void PurchaseBulldozerCrashTimes() {
+        Taptic.Selection();
+        bulldozerSmashTimes ++;
+        GetComponent<Crystals>().RemoveCrystal(bulldozerSmashTimesPrice);
+        ES3.Save<int>("bulldozerSmashTimes", bulldozerSmashTimes);
+    }
     public void ConsumeBulldozer () {
         bulldozerAmount--;
         ES3.Save<int>("bulldozerAmount", bulldozerAmount);
@@ -48,5 +64,6 @@ public class UpgradesContainer : MonoBehaviour
     void CalculatePrices () {
         upgradeMultiplierPrice = upgradeMultiplier * 30;
         bulldozerPrice = 10;
+        bulldozerSmashTimesPrice = bulldozerSmashTimes * 30;
     }
 }
