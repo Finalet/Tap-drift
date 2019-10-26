@@ -159,6 +159,7 @@ public class Player : MonoBehaviour
         GetComponent<SplineFollower>().enabled = true;
         GetComponent<SplineFollower>().autoFollow = true;
         GameManager.instance.stopScore = 1;
+        orignalPosition = Camera.main.transform.localPosition;
     }
 
 
@@ -447,5 +448,26 @@ public class Player : MonoBehaviour
         bulldozerDeployed = true;
         bulldozer.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f); 
         GameManager.instance.GetComponent<UpgradesContainer>().ConsumeBulldozer();
+    }
+
+    Vector3 orignalPosition;
+    public IEnumerator CameraShake(float duration, float magnitude)
+    {
+        float elapsed = 0f;
+        
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            Camera.main.transform.localPosition += new Vector3(x, y, 0);
+            elapsed += Time.deltaTime;
+            yield return 0;
+        }
+        while (Vector3.Distance(Camera.main.transform.localPosition, orignalPosition) >= 0.01f) {
+            Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, orignalPosition, 0.3f);
+            yield return new WaitForSeconds(0.01f);
+        }
+        Camera.main.transform.localPosition = orignalPosition;
     }
 }

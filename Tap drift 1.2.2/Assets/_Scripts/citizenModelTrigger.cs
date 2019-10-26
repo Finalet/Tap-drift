@@ -44,6 +44,7 @@ public class citizenModelTrigger : MonoBehaviour
         Taptic.Heavy();
         
         GameManager.instance.Player.GetComponent<Player>().timesSmashed ++;
+        StartCoroutine(GameManager.instance.Player.GetComponent<Player>().CameraShake(0.3f, 0.1f));
 
         Rigidbody rb = GetComponent<Rigidbody>();
         transform.parent.GetComponent<SplineFollower>().enabled = false;

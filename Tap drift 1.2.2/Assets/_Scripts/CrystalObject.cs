@@ -77,7 +77,7 @@ public class CrystalObject : MonoBehaviour
 
     IEnumerator lineupType()
     {
-        int x = Random.Range(0, 3);
+        int x = Random.Range(0, 2);
         if (x == 0) //3 in a row
         {
             yield return new WaitForSeconds(0.05f);

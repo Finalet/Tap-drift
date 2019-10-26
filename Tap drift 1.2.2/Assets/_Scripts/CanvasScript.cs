@@ -185,7 +185,7 @@ public class CanvasScript : MonoBehaviour
             moveText = false;
             decrease = false;
             driftScoreText.text = null;
-            driftScoreText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -530);
+            driftScoreText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -615);
         }
         else
         {
@@ -199,7 +199,7 @@ public class CanvasScript : MonoBehaviour
             decrease = false;
             driftScoreText.text = null;
             GameManager.instance.AddDriftScore();
-            driftScoreText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -530);
+            driftScoreText.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -615);
         }
         
     }
