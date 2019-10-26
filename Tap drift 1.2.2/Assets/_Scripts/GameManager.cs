@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     public float maxDrift = 0;
     public float overallDriftScore = 0;
     public int crashTimes = 0;
-    public int numberOfDays = 0;
+    public int dayNumber = 0;
     public float OverallAppRuntimeInSeconds;
 
     [Space]
@@ -104,12 +104,6 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
             noAds = false;
         }
 
-        if (ES3.KeyExists("lastDay")) //Load last day played;
-            lastDay = ES3.Load<int>("lastDay");
-
-        if (ES3.KeyExists("numberOfDays"))
-            numberOfDays = ES3.Load<int>("numberOfDays");
-
         stopScore = 0;
         if (ES3.KeyExists("maxScore")) //Load max score
             maxScore = ES3.Load<float>("maxScore");
@@ -124,8 +118,11 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         if (ES3.KeyExists("crashTimes")) // Load times crashed
             crashTimes = ES3.Load<int>("crashTimes");
 
-        if (ES3.KeyExists("numberOfDays")) // Load number of days login in a row
-            numberOfDays = ES3.Load<int>("numberOfDays");
+        if (ES3.KeyExists("dayNumber")) //Load number of days login in a row
+            dayNumber = ES3.Load<int>("dayNumber");
+
+        if (ES3.KeyExists("lastDay")) //Load last day played
+            lastDay = ES3.Load<int>("lastDay");
 
         if (ES3.KeyExists("mustang"))
             mustangUn = true;
@@ -174,6 +171,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
 
 
         StartCoroutine(ShowBannerWhenReady());
+        RecordDay();
     }
 
     void Update()
@@ -197,6 +195,28 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
                 ShowRegularAd();
             }
         }
+    }
+
+    void RecordDay () {
+        if (lastDay != System.DateTime.Now.DayOfYear)
+        {
+            if (System.DateTime.Now.DayOfYear - lastDay == 1)
+            {
+                dayNumber++;
+                ES3.Save<int>("dayNumber", dayNumber);
+            }
+            else
+            {
+                dayNumber = 1;
+                ES3.Save<int>("dayNumber", dayNumber);
+            }
+
+            lastDay = System.DateTime.Now.DayOfYear;
+            ES3.Save<int>("lastDay", lastDay);
+
+            Canvas.GetComponent<CanvasScript>().dailyBonusPanel.SetActive(true);
+            Canvas.GetComponent<CanvasScript>().dailyBlockPanel.gameObject.SetActive(true);
+        } 
     }
 
     [System.NonSerialized] public float keepDriftScore;
@@ -271,7 +291,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         CheckScoreToUnlockMustang(score);
         CheckOverallDriftScoreToUnlockHotrod();
         CheckCrashTimesToUnlockSUV();
-        CheckNumberNumberOfDaysToUnlockJeep();
+        //CheckNumberNumberOfDaysToUnlockJeep();
 
         Image[] fuel = Canvas.GetComponent<CanvasScript>().fullFuelBar.GetComponentsInChildren<Image>();
         foreach (Image img in fuel)
@@ -354,40 +374,42 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
             });
         }
     }
-    void CheckNumberNumberOfDaysToUnlockJeep ()
-    {
-        if (lastDay != System.DateTime.Now.DayOfYear)
+    /**
+        void CheckNumberNumberOfDaysToUnlockJeep ()
         {
-            if (System.DateTime.Now.DayOfYear - lastDay == 1)
+            if (lastDay != System.DateTime.Now.DayOfYear)
             {
-                numberOfDays++;
-                ES3.Save<int>("numberOfDays", numberOfDays);
+                if (System.DateTime.Now.DayOfYear - lastDay == 1)
+                {
+                    numberOfDays++;
+                    ES3.Save<int>("numberOfDays", numberOfDays);
+                }
+                else
+                {
+                    numberOfDays = 1;
+                    ES3.Save<int>("numberOfDays", numberOfDays);
+                }
+    
+                lastDay = System.DateTime.Now.DayOfYear;
+                ES3.Save<int>("lastDay", lastDay);
             }
-            else
+    
+    
+    
+            if (numberOfDays >= 5 && jeepUn == false)
             {
-                numberOfDays = 1;
-                ES3.Save<int>("numberOfDays", numberOfDays);
+                jeepUn = true;
+                ES3.Save<int>("jeep", 1);
+                unlockedScreen.SetActive(true);
+                unlockedScreen.transform.GetChild(0).GetComponent<UnlockedCars>().jeep = true;
+    
+                AnalyticsEvent.Custom("Jeep unlocked", new Dictionary<string, object>
+                {
+                    { "Overall app runtime in minutes", Mathf.Round(OverallAppRuntimeInSeconds/60) },
+                });
             }
-
-            lastDay = System.DateTime.Now.DayOfYear;
-            ES3.Save<int>("lastDay", lastDay);
         }
-
-
-
-        if (numberOfDays >= 5 && jeepUn == false)
-        {
-            jeepUn = true;
-            ES3.Save<int>("jeep", 1);
-            unlockedScreen.SetActive(true);
-            unlockedScreen.transform.GetChild(0).GetComponent<UnlockedCars>().jeep = true;
-
-            AnalyticsEvent.Custom("Jeep unlocked", new Dictionary<string, object>
-            {
-                { "Overall app runtime in minutes", Mathf.Round(OverallAppRuntimeInSeconds/60) },
-            });
-        }
-    }
+    */
 
     void ShowRegularAd()
     {

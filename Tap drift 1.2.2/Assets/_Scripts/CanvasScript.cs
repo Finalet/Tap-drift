@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class CanvasScript : MonoBehaviour
 {
     public TextMeshProUGUI scoreText, driftScoreText, tapToPlay, topScore, countDown, carName, tipsText, crystalAmountText, bulldozerAmountText, currentLevelText, nextLevelText, rewardText;
-    public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel;
-    public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar;
+    public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel, dailyBonusPanel;
+    public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar, dailyBlockPanel;
     public Text discText, progressText, upgradeMultiplierText, bulldozerSmashTimesIconText;
 
     public Sprite locked, pick, soundOn, soundOff;
@@ -44,6 +44,7 @@ public class CanvasScript : MonoBehaviour
     NumberFormatInfo nfi;
 
     float size = 0;
+
     void Awake()
     {
         continueButton = lostScreen.transform.GetChild(0).gameObject;
@@ -398,8 +399,8 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = (float)GameManager.instance.numberOfDays / 5;
-                progressText.text = Mathf.Round(GameManager.instance.numberOfDays).ToString("N", nfi);
+                progressBar.fillAmount = (float)GameManager.instance.dayNumber / 5;
+                progressText.text = Mathf.Round(GameManager.instance.dayNumber).ToString("N", nfi);
             }
             else
             {
