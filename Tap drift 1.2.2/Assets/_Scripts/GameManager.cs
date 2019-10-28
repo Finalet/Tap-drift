@@ -374,42 +374,16 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
             });
         }
     }
-    /**
-        void CheckNumberNumberOfDaysToUnlockJeep ()
+    public void UnlockJeep ()
+    {
+        jeepUn = true;
+        ES3.Save<int>("jeep", 1);
+
+        AnalyticsEvent.Custom("Jeep unlocked", new Dictionary<string, object>
         {
-            if (lastDay != System.DateTime.Now.DayOfYear)
-            {
-                if (System.DateTime.Now.DayOfYear - lastDay == 1)
-                {
-                    numberOfDays++;
-                    ES3.Save<int>("numberOfDays", numberOfDays);
-                }
-                else
-                {
-                    numberOfDays = 1;
-                    ES3.Save<int>("numberOfDays", numberOfDays);
-                }
-    
-                lastDay = System.DateTime.Now.DayOfYear;
-                ES3.Save<int>("lastDay", lastDay);
-            }
-    
-    
-    
-            if (numberOfDays >= 5 && jeepUn == false)
-            {
-                jeepUn = true;
-                ES3.Save<int>("jeep", 1);
-                unlockedScreen.SetActive(true);
-                unlockedScreen.transform.GetChild(0).GetComponent<UnlockedCars>().jeep = true;
-    
-                AnalyticsEvent.Custom("Jeep unlocked", new Dictionary<string, object>
-                {
-                    { "Overall app runtime in minutes", Mathf.Round(OverallAppRuntimeInSeconds/60) },
-                });
-            }
-        }
-    */
+            { "Overall app runtime in minutes", Mathf.Round(OverallAppRuntimeInSeconds/60) },
+        });
+    }
 
     void ShowRegularAd()
     {
