@@ -69,7 +69,7 @@ public class citizenModelTrigger : MonoBehaviour
         rb.AddRelativeForce(new Vector3(x, y, z) * speed * 0.015f, ForceMode.Impulse);
         rb.AddRelativeTorque(new Vector3(0, 0, torque)); 
 
-        GameManager.instance.Player.GetComponent<Player>().bulldozer.GetComponent<Animation>().Play();
+        GameManager.instance.Player.GetComponent<Player>().bulldozer.GetComponent<Animation>().Play("bulldozerSmash");
         if (GameManager.instance.Player.GetComponent<Player>().timesSmashed < GameManager.instance.GetComponent<UpgradesContainer>().bulldozerSmashTimes) {
             yield return new WaitForSeconds(0.2167f);
             GameManager.instance.Player.GetComponent<Player>().bulldozer.GetComponent<Animation>().Stop();

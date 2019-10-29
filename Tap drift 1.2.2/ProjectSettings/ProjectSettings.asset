@@ -11,7 +11,7 @@ PlayerSettings:
   defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
-  accelerometerFrequency: 60
+  accelerometerFrequency: 0
   companyName: Grant151
   productName: Tap Drift
   defaultCursor: {fileID: 0}
@@ -173,7 +173,7 @@ PlayerSettings:
   aotOptions: 
   stripEngineCode: 1
   iPhoneStrippingLevel: 0
-  iPhoneScriptCallOptimization: 0
+  iPhoneScriptCallOptimization: 1
   ForceInternetPermission: 0
   ForceSDCardPermission: 0
   CreateWallpaper: 0
