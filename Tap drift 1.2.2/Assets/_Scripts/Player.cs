@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
     {
         follower.computer = nextSegment.GetComponent<SplineComputer>();
         follower.SetDistance(0);
-        previousSegment2 = previousSegment;
+        if (previousSegment != null ) previousSegment2 = previousSegment;
         previousSegment = currentSegment;
         currentSegment = nextSegment;
 
@@ -270,7 +270,8 @@ public class Player : MonoBehaviour
     IEnumerator DeletePreviousSegment2 ()
     {
         yield return new WaitForSeconds(1);
-        Destroy(previousSegment2.gameObject);
+        if (previousSegment2 != null)
+            Destroy(previousSegment2);
     }
 
     public float clicked = 0;

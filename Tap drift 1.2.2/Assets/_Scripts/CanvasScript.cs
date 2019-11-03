@@ -663,7 +663,7 @@ public class CanvasScript : MonoBehaviour
         while (t > 0)
         {
             t -= Time.deltaTime;
-            lostBar.rectTransform.sizeDelta = new Vector2(t * 483.3f / 3, 32.6f);
+            lostBar.fillAmount = t/3;
             yield return new WaitForSeconds(Time.deltaTime);
             if (!GameManager.instance.Player.GetComponent<Player>().gameStarted)
                 t = 0;

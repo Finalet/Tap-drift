@@ -210,13 +210,16 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
                 dayNumber = 1;
                 ES3.Save<int>("dayNumber", dayNumber);
             }
+            DailyChallanges.instance.GenerateArray();
 
             lastDay = System.DateTime.Now.DayOfYear;
             ES3.Save<int>("lastDay", lastDay);
 
             Canvas.GetComponent<CanvasScript>().dailyBonusPanel.SetActive(true);
             Canvas.GetComponent<CanvasScript>().dailyBlockPanel.gameObject.SetActive(true);
-        } 
+        } else {
+            DailyChallanges.instance.LoadArray();
+        }
     }
 
     [System.NonSerialized] public float keepDriftScore;

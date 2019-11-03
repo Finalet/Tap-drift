@@ -63,7 +63,7 @@ public class Notifications : MonoBehaviour
             // used to cancel the notification, if you don't set one, a unique 
             // string will be generated automatically.
             Identifier = "24 hour notif",
-            Title = "Login for bonuses",
+            Title = "Play the game for more bonuses",
             Body = "Open the game to get daily helpful bonuses!",
             Subtitle = "",
             ShowInForeground = true,
@@ -91,7 +91,7 @@ public class Notifications : MonoBehaviour
             // string will be generated automatically.
             Identifier = "48 hour notif",
             Title = "New cars!",
-            Body = "Login to unlock new exciting cars!",
+            Body = "Play more to unlock new exciting cars!",
             Subtitle = "",
             ShowInForeground = true,
             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
@@ -118,7 +118,7 @@ public class Notifications : MonoBehaviour
             // string will be generated automatically.
             Identifier = "72 hour notif",
             Title = "Upgrades",
-            Body = "Login and unlock more advanced upgrades!",
+            Body = "Play and unlock more advanced upgrades!",
             Subtitle = "",
             ShowInForeground = true,
             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
