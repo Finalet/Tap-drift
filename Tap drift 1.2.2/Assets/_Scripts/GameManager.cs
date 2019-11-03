@@ -250,6 +250,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
             ES3.Save<float>("maxDrift", keepDriftScore);
             maxDrift = keepDriftScore;
         }
+        DailyChallanges.instance.AddDriftScore(Mathf.RoundToInt(keepDriftScore));
 
         keepDriftScore = 0;
     }
@@ -309,6 +310,9 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         }
 
         Player.GetComponent<Player>().HideTutorial();
+
+        DailyChallanges.instance.AddCrashTimes(1);
+        DailyChallanges.instance.AddScore(Mathf.RoundToInt(score));
     }
 
     void CheckScoreToUnlockMustang(float scr)

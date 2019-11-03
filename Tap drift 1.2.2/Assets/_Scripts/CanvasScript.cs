@@ -9,7 +9,7 @@ public class CanvasScript : MonoBehaviour
 {
     public TextMeshProUGUI scoreText, driftScoreText, tapToPlay, topScore, countDown, carName, tipsText, crystalAmountText, bulldozerAmountText, currentLevelText, nextLevelText, rewardText;
     public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel, dailyBonusPanel;
-    public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar, dailyBlockPanel;
+    public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar, dailyBlockPanel, dailyChallangesPanel;
     public Text discText, progressText, upgradeMultiplierText, bulldozerSmashTimesIconText;
 
     public Sprite locked, pick, soundOn, soundOff;
@@ -242,18 +242,23 @@ public class CanvasScript : MonoBehaviour
     public void StartGame ()
     {
         menuUI.SetActive(false);
+        tipsText.gameObject.SetActive(false);
+        dailyChallangesPanel.gameObject.SetActive(false);
+
         fullFuelBar.SetActive(true);
         fualBar.gameObject.SetActive(true);
         levelBar.gameObject.SetActive(true);
         scoreText.gameObject.SetActive(true);
-        tipsText.gameObject.SetActive(false);
     }
 
     public void RestartGame()
     {
         menuUI.SetActive(true);
         tipsText.gameObject.SetActive(true);
+        dailyChallangesPanel.gameObject.SetActive(true);
+
         ShowRandomTip();
+
         fullFuelBar.SetActive(false);
         fualBar.gameObject.SetActive(false);
         levelBar.gameObject.SetActive(false);
@@ -465,6 +470,7 @@ public class CanvasScript : MonoBehaviour
         tipsText.gameObject.SetActive(false);
         crystalAmountText.gameObject.SetActive(false);
         bulldozerAmountText.gameObject.SetActive(false);
+        dailyChallangesPanel.gameObject.SetActive(false);
 
         leftButton.gameObject.SetActive(true);
         rightButton.gameObject.SetActive(true);
@@ -489,6 +495,7 @@ public class CanvasScript : MonoBehaviour
             tipsText.gameObject.SetActive(true);
             crystalAmountText.gameObject.SetActive(true);
             bulldozerAmountText.gameObject.SetActive(true);
+            dailyChallangesPanel.gameObject.SetActive(true);
 
             leftButton.gameObject.SetActive(false);
             rightButton.gameObject.SetActive(false);
@@ -507,6 +514,7 @@ public class CanvasScript : MonoBehaviour
             exitButton.gameObject.SetActive(false);
             exitUpgradesButton.gameObject.SetActive(false);
 
+            dailyChallangesPanel.gameObject.SetActive(true);
             crystalAmountText.gameObject.SetActive(true);
             bulldozerAmountText.gameObject.SetActive(true);
             topScore.gameObject.SetActive(true);
@@ -749,6 +757,7 @@ public class CanvasScript : MonoBehaviour
         exitButton.gameObject.SetActive(true);
         exitUpgradesButton.gameObject.SetActive(true);
 
+        dailyChallangesPanel.gameObject.SetActive(false);
         crystalAmountText.gameObject.SetActive(false);
         bulldozerAmountText.gameObject.SetActive(false);
         topScore.gameObject.SetActive(false);
