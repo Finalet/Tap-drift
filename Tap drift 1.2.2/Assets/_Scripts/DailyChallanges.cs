@@ -199,10 +199,10 @@ public class DailyChallanges : MonoBehaviour
             GetComponent<Button>().interactable = true;
 
             GetComponent<RectTransform>().localScale = new Vector3(0.5f,0.5f,0.5f);
-            GetComponent<RectTransform>().anchoredPosition = new Vector2 (-4,650);
-            GetComponent<RectTransform>().anchorMax = new Vector2 (0,0.5f);
-            GetComponent<RectTransform>().anchorMin = new Vector2 (0,0.5f);
-            GetComponent<RectTransform>().pivot = new Vector2 (0,0.5f);
+            GetComponent<RectTransform>().anchoredPosition = new Vector2 (-2,-400);
+            GetComponent<RectTransform>().anchorMax = new Vector2 (0,1);
+            GetComponent<RectTransform>().anchorMin = new Vector2 (0,1);
+            GetComponent<RectTransform>().pivot = new Vector2 (0,1);
         }
     }
 }

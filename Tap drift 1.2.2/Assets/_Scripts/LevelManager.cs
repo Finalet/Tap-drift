@@ -111,7 +111,7 @@ public class LevelManager : MonoBehaviour
         Levels.Add(delta);
         for (int i = 1; i < 100; i++)
         {
-            delta *= 1.2f;
+            delta *= 1.15f;
             Levels.Add(delta);
         }
     }

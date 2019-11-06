@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     bool regualAdReady;
 
     public int lastDay;
+    [System.NonSerialized] public bool iPad; 
 
     void Awake()
     {
@@ -161,6 +162,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         if (UnityEngine.iOS.Device.generation.ToString().Contains("iPad"))
         {
             Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+            iPad = true;
         }
         else
         {
@@ -323,7 +325,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
 
     void CheckScoreToUnlockMustang(float scr)
     {
-        if (scr >= 40000 && mustangUn == false)
+        if (scr >= 80000 && mustangUn == false)
         {
             mustangUn = true;
             ES3.Save<int>("mustang", 1);
@@ -340,7 +342,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     {
         ES3.Save<float>("maxDrift", scr);
 
-        if (scr >= 10000 && sportsUn == false)
+        if (scr >= 30000 && sportsUn == false)
         {
             sportsUn = true;
             ES3.Save<int>("sports", 1);
@@ -357,7 +359,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     {
         ES3.Save<float>("overallDriftScore", overallDriftScore);
 
-        if (overallDriftScore >= 100000 && hotrodUn == false)
+        if (overallDriftScore >= 500000 && hotrodUn == false)
         {
             hotrodUn = true;
             ES3.Save<int>("hotrod", 1);

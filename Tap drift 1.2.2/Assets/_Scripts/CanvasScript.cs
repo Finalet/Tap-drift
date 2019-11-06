@@ -57,9 +57,9 @@ public class CanvasScript : MonoBehaviour
         fullFuelBar.SetActive(false);
         levelBar.gameObject.SetActive(false);
 
-        mustangRule = "Drive for 40 000 points";
-        sportsRule = "Earn 10 000 points non-stop while drifting";
-        hotrodRule = "Recieve overall 100 000 drift points";
+        mustangRule = "Drive for 80 000 points";
+        sportsRule = "Earn 30 000 points non-stop while drifting";
+        hotrodRule = "Recieve overall 500 000 drift points";
         suvRule = "Crash 30 times";
         jeepRule = "Play 5 days in a row";
 
@@ -142,6 +142,11 @@ public class CanvasScript : MonoBehaviour
         if (Input.touchCount > 0 && Input.GetTouch(0).deltaPosition.x >= Screen.width / 8 && inGarage)
         {
             ScrollLeft();
+        }
+
+        if (GameManager.instance.iPad) {
+            upgradesPanel.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
+            upgradesPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,100);
         }
     }
 
@@ -320,7 +325,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = GameManager.instance.maxScore / 40000;
+                progressBar.fillAmount = GameManager.instance.maxScore / 80000;
                 progressText.text = Mathf.Round(GameManager.instance.maxScore).ToString("N", nfi);
             }
             else
@@ -341,7 +346,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = GameManager.instance.maxDrift / 10000;
+                progressBar.fillAmount = GameManager.instance.maxDrift / 30000;
                 progressText.text = Mathf.Round(GameManager.instance.maxDrift).ToString("N", nfi);
             }
             else
@@ -362,7 +367,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = GameManager.instance.overallDriftScore / 100000;
+                progressBar.fillAmount = GameManager.instance.overallDriftScore / 500000;
                 progressText.text = Mathf.Round(GameManager.instance.overallDriftScore).ToString("N", nfi);
             }
             else
