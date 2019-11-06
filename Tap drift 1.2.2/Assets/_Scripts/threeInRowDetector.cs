@@ -24,8 +24,10 @@ public class threeInRowDetector : MonoBehaviour
             }
             else
             {
-                Destroy(carsInRow[x].transform.parent.gameObject);
-                carsInRow.RemoveAt(x);
+                if (carsInRow[x] != null) {
+                    Destroy(carsInRow[x].transform.parent.gameObject);
+                    carsInRow.RemoveAt(x);
+                } 
             }
            
         }

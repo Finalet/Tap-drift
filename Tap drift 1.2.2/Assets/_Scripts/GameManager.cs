@@ -150,6 +150,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         Advertisement.AddListener(this);
         Advertisement.Initialize(gameId, testMode);
         Canvas.GetComponent<CanvasScript>().continueButton.GetComponent<Button>().interactable = Advertisement.IsReady("rewardedVideo");
+        Canvas.GetComponent<CanvasScript>().videoForCrystalsButton.GetComponent<Button>().interactable = Advertisement.IsReady("rewardedVideoCrystals");
 
         if (soundOn)
             GetComponent<AudioSource>().Play();
@@ -179,6 +180,11 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         ScoreMultiplier();
 
         Canvas.GetComponent<CanvasScript>().continueButton.GetComponent<Button>().interactable = Advertisement.IsReady("rewardedVideo");
+
+        if (!watched)
+            Canvas.GetComponent<CanvasScript>().videoForCrystalsButton.GetComponent<Button>().interactable = Advertisement.IsReady("rewardedVideoCrystals");
+        else 
+            Canvas.GetComponent<CanvasScript>().videoForCrystalsButton.GetComponent<Button>().interactable = false;
 
         CalculateScoreSeperate();
         if (land)
@@ -317,7 +323,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
 
     void CheckScoreToUnlockMustang(float scr)
     {
-        if (scr >= 20000 && mustangUn == false)
+        if (scr >= 40000 && mustangUn == false)
         {
             mustangUn = true;
             ES3.Save<int>("mustang", 1);
@@ -334,7 +340,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     {
         ES3.Save<float>("maxDrift", scr);
 
-        if (scr >= 5000 && sportsUn == false)
+        if (scr >= 10000 && sportsUn == false)
         {
             sportsUn = true;
             ES3.Save<int>("sports", 1);
@@ -351,7 +357,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     {
         ES3.Save<float>("overallDriftScore", overallDriftScore);
 
-        if (overallDriftScore >= 50000 && hotrodUn == false)
+        if (overallDriftScore >= 100000 && hotrodUn == false)
         {
             hotrodUn = true;
             ES3.Save<int>("hotrod", 1);
@@ -401,11 +407,25 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
             { "Time since load", Time.timeSinceLevelLoad }
         });
     }
-    public void ShowRewardedVideo ()
+    public void ShowRewardedVideoContinue ()
     {
+        Taptic.Selection();
         Advertisement.Show("rewardedVideo");
 
         AnalyticsEvent.Custom("Showed rewarded ad", new Dictionary<string, object>
+        {
+            { "Score", Mathf.Round(score)},
+            { "Time since load", Time.timeSinceLevelLoad }
+        });
+    }
+    bool watched;
+    public void ShowRewardedVideoCrystals ()
+    {
+        Taptic.Selection();
+        watched = true;
+        Advertisement.Show("rewardedVideoCrystals");
+
+        AnalyticsEvent.Custom("Showed rewarded crystal ad", new Dictionary<string, object>
         {
             { "Score", Mathf.Round(score)},
             { "Time since load", Time.timeSinceLevelLoad }
@@ -436,6 +456,9 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
             Canvas.GetComponent<CanvasScript>().play.SetActive(true);
             if (placementId == "rewardedVideo")
                 Continue();
+            
+            if (placementId == "rewardedVideoCrystals")
+                GetComponent<Crystals>().AddCrystal(20);
         }
         else if (showResult == ShowResult.Skipped)
         {
@@ -454,6 +477,10 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         {
             Canvas.GetComponent<CanvasScript>().continueButton.GetComponent<Button>().interactable = true;
         }
+        if (placementId == "rewardedVideoCrystals")
+        {
+            Canvas.GetComponent<CanvasScript>().videoForCrystalsButton.GetComponent<Button>().interactable = true;
+        }
         if (placementId == "video")
             regualAdReady = true;
     }
@@ -469,7 +496,6 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
 
     public void Continue ()
     {
-        Taptic.Selection();
         lost = false;
         desiredY = Player.GetComponent<Player>().carModel.transform.localPosition.y;
         Invoke("LateStart", 1.5f);
@@ -496,10 +522,13 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         {
             img.color = new Color(img.color.r, img.color.g, img.color.b, 1f);
         }
+
+        DailyChallanges.instance.AddScore(Mathf.RoundToInt(-score));
     }
     public void Restart ()
     {
         Taptic.Selection();
+
         Destroy(Player.GetComponent<Player>().nextSegment);
         Destroy(Player.GetComponent<Player>().previousSegment);
         Destroy(Player.GetComponent<Player>().previousSegment2);
@@ -540,6 +569,8 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         unlockedScreen.SetActive(false);
 
         GetComponent<LevelManager>().Lost();
+
+        DailyChallanges.instance.CheckDailys();
     }
 
     IEnumerator modelBlick ()

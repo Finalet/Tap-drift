@@ -214,7 +214,10 @@ public class Player : MonoBehaviour
                 }
             }
 
-            if (driftFuel <= 0) ExitDrift();
+            if (driftFuel <= 0)  {
+                ExitDrift();
+                DailyChallanges.instance.RunOutOfFuel();
+            }
 
         } else if (driftRight == true)
         {
@@ -236,7 +239,10 @@ public class Player : MonoBehaviour
                 }
             }
 
-            if (driftFuel <= 0) ExitDrift();
+            if (driftFuel <= 0) {
+                ExitDrift();
+                DailyChallanges.instance.RunOutOfFuel();
+            }
 
         } else if (gameStarted)
         {

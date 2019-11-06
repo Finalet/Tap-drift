@@ -8,14 +8,14 @@ using UnityEngine.UI;
 public class CanvasScript : MonoBehaviour
 {
     public TextMeshProUGUI scoreText, driftScoreText, tapToPlay, topScore, countDown, carName, tipsText, crystalAmountText, bulldozerAmountText, currentLevelText, nextLevelText, rewardText;
-    public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel, dailyBonusPanel;
-    public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar, dailyBlockPanel, dailyChallangesPanel;
+    public GameObject menuUI, fullFuelBar, play, lostScreen, driftTip, Tutorial, upgradesPanel, dailyBonusPanel, fullScreenChallangesPanel;
+    public Image fualBar, screenFiller, discPanel, progressBar, lostBar, sound, cursor, multBar, levelBar, dailyBlockPanel;
     public Text discText, progressText, upgradeMultiplierText, bulldozerSmashTimesIconText;
 
     public Sprite locked, pick, soundOn, soundOff;
 
     public Transform eleganrCarCamera, mustangCamera, sportsCamera,  hotrodCamera, SUVcamera, jeepCamera, mainCameraPos;
-    public Button garageButton, leftButton, rightButton, exitButton, pickButton, policyButton, pauseButton, exitUpgradesButton;
+    public Button garageButton, leftButton, rightButton, exitButton, pickButton, policyButton, pauseButton, exitUpgradesButton, videoForCrystalsButton;
 
     [Header("Unlock Rules")]
     string mustangRule;
@@ -57,9 +57,9 @@ public class CanvasScript : MonoBehaviour
         fullFuelBar.SetActive(false);
         levelBar.gameObject.SetActive(false);
 
-        mustangRule = "Drive for 20 000 points";
-        sportsRule = "Earn 5 000 points non-stop while drifting";
-        hotrodRule = "Recieve overall 50 000 drift points";
+        mustangRule = "Drive for 40 000 points";
+        sportsRule = "Earn 10 000 points non-stop while drifting";
+        hotrodRule = "Recieve overall 100 000 drift points";
         suvRule = "Crash 30 times";
         jeepRule = "Play 5 days in a row";
 
@@ -243,7 +243,7 @@ public class CanvasScript : MonoBehaviour
     {
         menuUI.SetActive(false);
         tipsText.gameObject.SetActive(false);
-        dailyChallangesPanel.gameObject.SetActive(false);
+        DailyChallanges.instance.OnOffPanel();
 
         fullFuelBar.SetActive(true);
         fualBar.gameObject.SetActive(true);
@@ -255,7 +255,7 @@ public class CanvasScript : MonoBehaviour
     {
         menuUI.SetActive(true);
         tipsText.gameObject.SetActive(true);
-        dailyChallangesPanel.gameObject.SetActive(true);
+        DailyChallanges.instance.OnOffPanel();
 
         ShowRandomTip();
 
@@ -320,7 +320,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = GameManager.instance.maxScore / 20000;
+                progressBar.fillAmount = GameManager.instance.maxScore / 40000;
                 progressText.text = Mathf.Round(GameManager.instance.maxScore).ToString("N", nfi);
             }
             else
@@ -341,7 +341,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = GameManager.instance.maxDrift / 5000;
+                progressBar.fillAmount = GameManager.instance.maxDrift / 10000;
                 progressText.text = Mathf.Round(GameManager.instance.maxDrift).ToString("N", nfi);
             }
             else
@@ -362,7 +362,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = GameManager.instance.overallDriftScore / 50000;
+                progressBar.fillAmount = GameManager.instance.overallDriftScore / 100000;
                 progressText.text = Mathf.Round(GameManager.instance.overallDriftScore).ToString("N", nfi);
             }
             else
@@ -470,7 +470,7 @@ public class CanvasScript : MonoBehaviour
         tipsText.gameObject.SetActive(false);
         crystalAmountText.gameObject.SetActive(false);
         bulldozerAmountText.gameObject.SetActive(false);
-        dailyChallangesPanel.gameObject.SetActive(false);
+        DailyChallanges.instance.OnOffPanel();
 
         leftButton.gameObject.SetActive(true);
         rightButton.gameObject.SetActive(true);
@@ -495,7 +495,7 @@ public class CanvasScript : MonoBehaviour
             tipsText.gameObject.SetActive(true);
             crystalAmountText.gameObject.SetActive(true);
             bulldozerAmountText.gameObject.SetActive(true);
-            dailyChallangesPanel.gameObject.SetActive(true);
+            DailyChallanges.instance.OnOffPanel();
 
             leftButton.gameObject.SetActive(false);
             rightButton.gameObject.SetActive(false);
@@ -511,10 +511,31 @@ public class CanvasScript : MonoBehaviour
 
             Taptic.Selection();
             upgradesPanel.SetActive(false);
+            fullScreenChallangesPanel.SetActive(false);
             exitButton.gameObject.SetActive(false);
             exitUpgradesButton.gameObject.SetActive(false);
 
-            dailyChallangesPanel.gameObject.SetActive(true);
+            DailyChallanges.instance.OnOffPanel();
+            crystalAmountText.gameObject.SetActive(true);
+            bulldozerAmountText.gameObject.SetActive(true);
+            topScore.gameObject.SetActive(true);
+            tapToPlay.gameObject.SetActive(true);
+            play.gameObject.SetActive(true);
+            garageButton.gameObject.SetActive(true);
+            tipsText.gameObject.SetActive(true);
+        } else if (inChallanes) {
+            inChallanes = false;
+
+            if (disableButton)
+                return;
+
+            Taptic.Selection();
+            upgradesPanel.SetActive(false);
+            fullScreenChallangesPanel.SetActive(false);
+            exitButton.gameObject.SetActive(false);
+            exitUpgradesButton.gameObject.SetActive(false);
+
+            DailyChallanges.instance.FullScreen();
             crystalAmountText.gameObject.SetActive(true);
             bulldozerAmountText.gameObject.SetActive(true);
             topScore.gameObject.SetActive(true);
@@ -757,7 +778,7 @@ public class CanvasScript : MonoBehaviour
         exitButton.gameObject.SetActive(true);
         exitUpgradesButton.gameObject.SetActive(true);
 
-        dailyChallangesPanel.gameObject.SetActive(false);
+        DailyChallanges.instance.OnOffPanel();
         crystalAmountText.gameObject.SetActive(false);
         bulldozerAmountText.gameObject.SetActive(false);
         topScore.gameObject.SetActive(false);
@@ -840,4 +861,25 @@ public class CanvasScript : MonoBehaviour
         }
     }
  #endregion
+
+#region Challanges
+    bool inChallanes;
+    public void ChallangesFullScreenSwitch() {
+        if (GameManager.instance.Player.GetComponent<Player>().gameStarted) return;
+
+        inChallanes = true;
+
+        Taptic.Selection();
+        fullScreenChallangesPanel.SetActive(true);
+        exitButton.gameObject.SetActive(true);
+        exitUpgradesButton.gameObject.SetActive(true);
+
+        DailyChallanges.instance.FullScreen();
+        topScore.gameObject.SetActive(false);
+        tapToPlay.gameObject.SetActive(false);
+        play.gameObject.SetActive(false);
+        garageButton.gameObject.SetActive(false);
+        tipsText.gameObject.SetActive(false);
+    }
+#endregion
 }
