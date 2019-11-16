@@ -60,7 +60,7 @@ public class CanvasScript : MonoBehaviour
         mustangRule = "Drive for 80 000 points";
         sportsRule = "Earn 30 000 points non-stop while drifting";
         hotrodRule = "Recieve overall 500 000 drift points";
-        suvRule = "Crash 30 times";
+        suvRule = "Crash 60 times";
         jeepRule = "Play 5 days in a row";
 
         ShowRandomTip();
@@ -388,7 +388,7 @@ public class CanvasScript : MonoBehaviour
                 pickButton.GetComponent<Image>().sprite = locked;
                 progressBar.transform.parent.gameObject.SetActive(true);
                 progressText.transform.parent.gameObject.SetActive(true);
-                progressBar.fillAmount = (float)GameManager.instance.crashTimes / 30;
+                progressBar.fillAmount = (float)GameManager.instance.crashTimes / 60;
                 progressText.text = Mathf.Round(GameManager.instance.crashTimes).ToString("N", nfi);
             }
             else

@@ -37,8 +37,6 @@ public class DailyChallanges : MonoBehaviour
     Challage[] Array;
     int numberOfChallanges = 2;
 
-    int lastDay;
-
     int score;
     int driftScore;
     int crashTimes;
@@ -54,9 +52,6 @@ public class DailyChallanges : MonoBehaviour
         nfi.NumberDecimalDigits = 0;
     }
     void Update() {
-
-        lastDay = GameManager.instance.lastDay;
-
         if (Array == null) 
             return;
 

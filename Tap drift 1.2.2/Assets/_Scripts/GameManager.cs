@@ -148,6 +148,9 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     }
     void Start()
     {
+        AppsFlyer.setAppsFlyerKey ("zcKrZYJWnrWWctCxcLNnyT");
+
+
         Advertisement.AddListener(this);
         Advertisement.Initialize(gameId, testMode);
         Canvas.GetComponent<CanvasScript>().continueButton.GetComponent<Button>().interactable = Advertisement.IsReady("rewardedVideo");
@@ -168,8 +171,15 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
         {
             Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
         }
+
+        AppsFlyer.setAppID ("1479272430");
+        AppsFlyer.trackAppLaunch ();
+
 #else
         Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+
+        //AppsFlyer.setAppID ("YOUR_ANDROID_PACKAGE_NAME_HERE");
+        //AppsFlyer.init ("YOUR_APPSFLYER_DEV_KEY","AppsFlyerTrackerCallbacks");
 #endif
 
 
@@ -376,7 +386,7 @@ public class GameManager : MonoBehaviour, IUnityAdsListener
     {
         ES3.Save<int>("crashTimes", crashTimes);
 
-        if (crashTimes >= 30 && suvUn == false)
+        if (crashTimes >= 60 && suvUn == false)
         {
             suvUn = true;
             ES3.Save<int>("suv", 1);

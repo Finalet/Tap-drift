@@ -52,9 +52,11 @@ public class DailyBonus : MonoBehaviour
             }
             
         }
+        dayNumber = GameManager.instance.dayNumber;
     }
     void Start() {
-        StartCoroutine(DrawTimeLine());        
+        StartCoroutine(DrawTimeLine());   
+        dayNumber = GameManager.instance.dayNumber;     
     }
     void Update() {
         dayNumber = GameManager.instance.dayNumber;
